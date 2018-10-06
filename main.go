@@ -5,9 +5,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/dczomber/data-structures-and-algs/datastructs/node"
-	"github.com/dczomber/data-structures-and-algs/datastructs/queue"
-	"github.com/dczomber/data-structures-and-algs/datastructs/stack"
+	"github.com/dczomber/data-structs-and-algs/datastructs/node"
+	"github.com/dczomber/data-structs-and-algs/datastructs/queue"
+	"github.com/dczomber/data-structs-and-algs/datastructs/stack"
 )
 
 var nToPush = 6

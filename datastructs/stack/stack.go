@@ -3,7 +3,7 @@ package stack
 import (
 	"errors"
 
-	"github.com/dczomber/data-structures-and-algs/datastructs/node"
+	"github.com/dczomber/data-structs-and-algs/datastructs/node"
 )
 
 type stack struct {
