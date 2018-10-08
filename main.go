@@ -5,9 +5,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/dczomber/data-structs-and-algs/datastructs/node"
-	"github.com/dczomber/data-structs-and-algs/datastructs/queue"
-	"github.com/dczomber/data-structs-and-algs/datastructs/stack"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/node"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/queue"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/stack"
 )
 
 var nToPush = 6

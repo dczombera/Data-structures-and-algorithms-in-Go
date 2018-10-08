@@ -3,7 +3,7 @@ package queue
 import (
 	"errors"
 
-	"github.com/dczomber/data-structs-and-algs/datastructs/node"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/node"
 )
 
 type queue struct {
