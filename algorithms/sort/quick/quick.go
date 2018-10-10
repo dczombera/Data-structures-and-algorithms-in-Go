@@ -44,7 +44,6 @@ func partition(kk []Key, lo, hi int) int {
 			}
 		}
 
-		// Check if pointer have crossed
 		if i >= j {
 			break
 		}
