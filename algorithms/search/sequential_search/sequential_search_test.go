@@ -1,4 +1,4 @@
-package symbol_table
+package sequential_search
 
 import "testing"
 

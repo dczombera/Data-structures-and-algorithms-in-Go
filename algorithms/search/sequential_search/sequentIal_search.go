@@ -1,11 +1,6 @@
-package symbol_table
+package sequential_search
 
 import "errors"
-
-type sequentialSearchST struct {
-	first *Node
-	n     int
-}
 
 type Node struct {
 	Key  Key
@@ -16,6 +11,11 @@ type Node struct {
 type Key int
 
 type Value string
+
+type sequentialSearchST struct {
+	first *Node
+	n     int
+}
 
 func NewEmptySequentialSearchST() sequentialSearchST {
 	return sequentialSearchST{nil, 0}
