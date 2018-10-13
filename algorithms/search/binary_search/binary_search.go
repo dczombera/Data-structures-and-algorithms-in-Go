@@ -2,7 +2,6 @@ package binary_search
 
 import (
 	"errors"
-	"log"
 )
 
 type Key int
@@ -15,8 +14,10 @@ type BinarySearchST struct {
 	n      int
 }
 
+var initSize = 2
+
 func NewEmptyBinarySearchST() BinarySearchST {
-	return BinarySearchST{make([]Key, 1, 1), make([]Value, 0, 1), 0}
+	return BinarySearchST{make([]Key, initSize), make([]Value, initSize), 0}
 }
 
 func NewBinarySearchST(key Key, val Value) BinarySearchST {
@@ -45,7 +46,6 @@ func (bs *BinarySearchST) Put(key Key, val Value) {
 		bs.keys[i] = bs.keys[bs.n-1]
 		bs.values[i] = bs.values[bs.n-1]
 	}
-	log.Println("SIZE", bs.n, "CAP", cap(bs.keys), "LEN", len(bs.keys), "POS", r)
 	bs.keys[r] = key
 	bs.values[r] = val
 	bs.n++
