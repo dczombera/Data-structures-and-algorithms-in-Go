@@ -29,18 +29,26 @@ func (this Key) CompareTo(that Key) int {
 	return 0
 }
 
-func (bst BST) Size() int {
+func NewEmptyBST() BST {
+	return BST{}
+}
+
+func NewBST(n *Node) BST {
+	return BST{n}
+}
+
+func (bst *BST) Size() int {
 	return bst.size(bst.Root)
 }
 
-func (bst BST) size(n *Node) int {
+func (bst *BST) size(n *Node) int {
 	if n == nil {
 		return 0
 	}
 	return n.Size
 }
 
-func (bst BST) Contains(k Key) bool {
+func (bst *BST) Contains(k Key) bool {
 	_, error := bst.Get(k)
 	if error != nil {
 		return false
@@ -48,20 +56,20 @@ func (bst BST) Contains(k Key) bool {
 	return true
 }
 
-func (bst BST) IsEmpty() bool {
+func (bst *BST) IsEmpty() bool {
 	return bst.Size() == 0
 }
 
-func (bst BST) Get(k Key) (Value, error) {
+func (bst *BST) Get(k Key) (Value, error) {
 	return bst.get(bst.Root, k)
 }
 
-func (bst BST) get(n *Node, k Key) (Value, error) {
+func (bst *BST) get(n *Node, k Key) (Value, error) {
 	if n == nil {
 		return Value(""), errors.New("Key not found")
 	}
 
-	cmp := n.Key.CompareTo(k)
+	cmp := k.CompareTo(n.Key)
 	if cmp < 0 {
 		return bst.get(n.Left, k)
 	} else if cmp > 0 {
@@ -70,7 +78,7 @@ func (bst BST) get(n *Node, k Key) (Value, error) {
 	return n.Val, nil
 }
 
-func (bst BST) Put(k Key, v Value) {
+func (bst *BST) Put(k Key, v Value) {
 	if v == "" {
 		bst.Delete(k)
 		return
@@ -78,7 +86,7 @@ func (bst BST) Put(k Key, v Value) {
 	bst.Root = bst.put(bst.Root, k, v)
 }
 
-func (bst BST) put(n *Node, k Key, v Value) *Node {
+func (bst *BST) put(n *Node, k Key, v Value) *Node {
 	if n == nil {
 		return &Node{k, v, nil, nil, 1}
 	}
@@ -97,14 +105,14 @@ func (bst BST) put(n *Node, k Key, v Value) *Node {
 
 }
 
-func (bst BST) Delete(k Key) {
+func (bst *BST) Delete(k Key) {
 	if bst.IsEmpty() {
 		log.Fatalln("Tree is empty")
 	}
 	bst.Root = bst.delete(bst.Root, k)
 }
 
-func (bst BST) delete(n *Node, k Key) *Node {
+func (bst *BST) delete(n *Node, k Key) *Node {
 	if n == nil {
 		return nil
 	}
@@ -129,14 +137,14 @@ func (bst BST) delete(n *Node, k Key) *Node {
 	return n
 }
 
-func (bst BST) DelMin() {
+func (bst *BST) DelMin() {
 	if bst.IsEmpty() {
 		log.Fatalln("Tree is empty")
 	}
 	bst.Root = bst.delMin(bst.Root)
 }
 
-func (bst BST) delMin(n *Node) *Node {
+func (bst *BST) delMin(n *Node) *Node {
 	if n.Left == nil {
 		return n.Right
 	}
@@ -145,14 +153,14 @@ func (bst BST) delMin(n *Node) *Node {
 	return n
 }
 
-func (bst BST) DelMax() {
+func (bst *BST) DelMax() {
 	if bst.IsEmpty() {
 		log.Fatalln("Tree is empty")
 	}
 	bst.Root = bst.delMax(bst.Root)
 }
 
-func (bst BST) delMax(n *Node) *Node {
+func (bst *BST) delMax(n *Node) *Node {
 	if n.Right == nil {
 		return n.Left
 	}
@@ -161,30 +169,50 @@ func (bst BST) delMax(n *Node) *Node {
 	return n
 }
 
-func (bst BST) Min() *Node {
+func (bst *BST) Min() *Node {
 	if bst.IsEmpty() {
 		log.Fatalln("Tree is empty")
 	}
 	return bst.min(bst.Root)
 }
 
-func (bst BST) min(n *Node) *Node {
+func (bst *BST) min(n *Node) *Node {
 	if n.Left == nil {
 		return n
 	}
 	return bst.min(n.Left)
 }
 
-func (bst BST) Max() *Node {
+func (bst *BST) Max() *Node {
 	if bst.IsEmpty() {
 		log.Fatalln("Tree is empty")
 	}
 	return bst.max(bst.Root)
 }
 
-func (bst BST) max(n *Node) *Node {
+func (bst *BST) max(n *Node) *Node {
 	if n.Right == nil {
 		return n
 	}
 	return bst.max(n.Right)
+}
+
+func (bst *BST) IsBST() bool {
+	return bst.isBST(bst.Root, nil, nil)
+}
+
+func (bst *BST) isBST(n *Node, min, max *Key) bool {
+	if n == nil {
+		return true
+	}
+
+	if min != nil && n.Key.CompareTo(*min) <= 0 {
+		return false
+	}
+
+	if max != nil && n.Key.CompareTo(*max) >= 0 {
+		return false
+	}
+
+	return bst.isBST(n.Left, min, &n.Key) && bst.isBST(n.Right, &n.Key, max)
 }
