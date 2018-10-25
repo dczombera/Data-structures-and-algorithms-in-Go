@@ -15,9 +15,8 @@ type KV struct {
 }
 
 // Traverse tree without using get method of BST
-func containsKey(bst *BST, k Key) bool {
-	q := []*Node{bst.Root}
-	var n *Node
+func containsKey(n *Node, k Key) bool {
+	q := []*Node{n}
 	for len(q) > 0 {
 		n, q = q[0], q[1:]
 		if n == nil {
@@ -43,7 +42,7 @@ func TestBSTPut(t *testing.T) {
 			bst.Put(d.key, d.val)
 		}
 		for _, w := range tc.want {
-			if !containsKey(&bst, w.key) {
+			if !containsKey(bst.Root, w.key) {
 				t.Errorf("BST does not contain key %v", w.key)
 			}
 		}
