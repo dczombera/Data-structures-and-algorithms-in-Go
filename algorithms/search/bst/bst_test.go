@@ -73,10 +73,13 @@ func TestBSTGet(t *testing.T) {
 }
 
 func TestBSTDelete(t *testing.T) {
-	testCases := []testCase{
-		{[]KV{{1, "hola"}, {2, "hello"}, {2, ""}}, []KV{{1, "hola"}, {2, ""}}},
-		{[]KV{{42, "foo"}, {0, "bar"}, {42, "bar"}, {0, "foo"}, {42, ""}, {0, ""}}, []KV{{42, ""}, {0, ""}}},
-		{[]KV{{-42, "han"}, {42, "shot"}, {0, "first"}, {0, ""}}, []KV{{-42, "han"}, {0, ""}, {42, "shot"}}},
+	testCases := []struct {
+		data    []KV
+		deleted []Key
+	}{
+		{[]KV{{1, "hola"}, {2, "hello"}, {2, ""}}, []Key{2}},
+		{[]KV{{42, "foo"}, {0, "bar"}, {42, "bar"}, {0, "foo"}, {42, ""}, {0, ""}}, []Key{42, 0}},
+		{[]KV{{-42, "han"}, {42, "shot"}, {0, "first"}, {0, ""}, {0, ""}, {42, ""}, {-42, ""}}, []Key{0}},
 	}
 
 	for _, tc := range testCases {
@@ -85,14 +88,10 @@ func TestBSTDelete(t *testing.T) {
 			bst.Put(d.key, d.val)
 		}
 
-		for _, w := range tc.want {
-			v, err := bst.Get(w.key)
-			if err != nil {
-				if w.val != "" {
-					t.Errorf("Got error '%v' while looking for value %v of key %v", err, w.val, w.key)
-				}
-			} else if v != w.val {
-				t.Errorf("Got %v, want %v", v, w.val)
+		for _, w := range tc.deleted {
+			v, err := bst.Get(w)
+			if err == nil {
+				t.Errorf("Got value %v, want KV pair with key %v to be deleted", v, w)
 			}
 		}
 	}
