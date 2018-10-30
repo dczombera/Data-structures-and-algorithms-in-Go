@@ -1,7 +1,7 @@
 package graph
 
 type Bag struct {
-	items []Value
+	items []int
 	Size  int
 }
 
@@ -11,10 +11,8 @@ type Graph struct {
 	adjacency []Bag
 }
 
-type Value int
-
 func (b *Bag) add(v int) {
-	b.items = append(b.items, Value(v))
+	b.items = append(b.items, v)
 	b.Size++
 }
 
@@ -44,9 +42,9 @@ func (g *Graph) Edges() int {
 	return g.edges
 }
 
-func (g *Graph) AdjacencyList(vertex int) Bag {
+func (g *Graph) AdjacencyList(vertex int) []int {
 	g.validateVertices(vertex)
-	return g.adjacency[vertex]
+	return g.adjacency[vertex].items
 }
 
 func (g *Graph) Degree(vertex int) int {
