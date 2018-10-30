@@ -24,10 +24,10 @@ var testCases = []testCase{
 }
 
 func containsVertices(has Bag, want []Value) bool {
-	for _, v := range want {
+	for _, w := range want {
 		foundVertex := false
-		for curr := has.first; curr != nil; curr = curr.next {
-			if curr.val == v {
+		for _, v := range has.items {
+			if w == v {
 				foundVertex = true
 				break
 			}

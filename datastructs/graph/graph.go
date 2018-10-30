@@ -1,12 +1,7 @@
 package graph
 
-type Node struct {
-	val  Value
-	next *Node
-}
-
 type Bag struct {
-	first *Node
+	items []Value
 	Size  int
 }
 
@@ -18,13 +13,8 @@ type Graph struct {
 
 type Value int
 
-func NewNode(val Value, next *Node) *Node {
-	return &Node{val, next}
-}
-
 func (b *Bag) add(v int) {
-	n := NewNode(Value(v), b.first)
-	b.first = n
+	b.items = append(b.items, Value(v))
 	b.Size++
 }
 
