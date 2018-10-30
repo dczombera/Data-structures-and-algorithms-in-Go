@@ -11,7 +11,7 @@ type testCase struct {
 
 type VertexEdges struct {
 	vertex int
-	adj    []Value
+	adj    []int
 }
 
 type VertexDegree struct {
@@ -20,13 +20,13 @@ type VertexDegree struct {
 }
 
 var testCases = []testCase{
-	{8, [][]int{[]int{0, 1}, []int{2, 4}, []int{1, 5}, []int{7, 5}, []int{7, 1}}, []VertexEdges{{0, []Value{1}}, {1, []Value{7, 5, 0}}, {2, []Value{4}}, {4, []Value{2}}, {5, []Value{7, 1}}, {7, []Value{1, 5}}}, []VertexDegree{{0, 1}, {1, 3}, {2, 1}, {4, 1}, {5, 2}, {7, 2}}},
+	{8, [][]int{[]int{0, 1}, []int{2, 4}, []int{1, 5}, []int{7, 5}, []int{7, 1}}, []VertexEdges{{0, []int{1}}, {1, []int{7, 5, 0}}, {2, []int{4}}, {4, []int{2}}, {5, []int{7, 1}}, {7, []int{1, 5}}}, []VertexDegree{{0, 1}, {1, 3}, {2, 1}, {4, 1}, {5, 2}, {7, 2}}},
 }
 
-func containsVertices(has Bag, want []Value) bool {
+func containsVertices(got, want []int) bool {
 	for _, w := range want {
 		foundVertex := false
-		for _, v := range has.items {
+		for _, v := range got {
 			if w == v {
 				foundVertex = true
 				break
@@ -53,7 +53,7 @@ func TestGraph(t *testing.T) {
 		}
 
 		for _, wd := range tc.wantDegree {
-			degree := g.AdjacencyList(wd.vertex).Size
+			degree := g.Degree(wd.vertex)
 			if degree != wd.degree {
 				t.Errorf("Got degree of %v for vertex %v, want degree of %v", degree, wd.vertex, wd.degree)
 			}
