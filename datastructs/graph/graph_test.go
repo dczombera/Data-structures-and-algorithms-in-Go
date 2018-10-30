@@ -20,7 +20,7 @@ type VertexDegree struct {
 }
 
 var testCases = []testCase{
-	{8, [][]int{[]int{0, 1}, []int{2, 4}, []int{1, 5}, []int{7, 5}, []int{7, 1}}, []VertexEdges{{0, []int{1}}, {1, []int{7, 5, 0}}, {2, []int{4}}, {4, []int{2}}, {5, []int{7, 1}}, {7, []int{1, 5}}}, []VertexDegree{{0, 1}, {1, 3}, {2, 1}, {4, 1}, {5, 2}, {7, 2}}},
+	{8, [][]int{{0, 1}, {2, 4}, {1, 5}, {7, 5}, {7, 1}}, []VertexEdges{{0, []int{1}}, {1, []int{7, 5, 0}}, {2, []int{4}}, {4, []int{2}}, {5, []int{7, 1}}, {7, []int{1, 5}}}, []VertexDegree{{0, 1}, {1, 3}, {2, 1}, {4, 1}, {5, 2}, {7, 2}}},
 }
 
 func containsVertices(got, want []int) bool {
