@@ -3,8 +3,8 @@ package dfs
 import "github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/graph"
 
 type DepthFirstSearch struct {
-	marked []bool
-	count  int
+	connected []bool
+	count     int
 }
 
 func NewDFS(g *graph.Graph, sourceVertex int) *DepthFirstSearch {
@@ -15,10 +15,10 @@ func NewDFS(g *graph.Graph, sourceVertex int) *DepthFirstSearch {
 }
 
 func (dfs *DepthFirstSearch) dfs(g *graph.Graph, vertex int) {
-	dfs.marked[vertex] = true
+	dfs.connected[vertex] = true
 	dfs.count++
 	for _, w := range g.AdjacencyList(vertex) {
-		if !dfs.marked[w] {
+		if !dfs.connected[w] {
 			dfs.dfs(g, w)
 		}
 	}
@@ -26,7 +26,7 @@ func (dfs *DepthFirstSearch) dfs(g *graph.Graph, vertex int) {
 
 func (dfs *DepthFirstSearch) IsConnected(vertex int) bool {
 	dfs.validateVertex(vertex)
-	return dfs.marked[vertex]
+	return dfs.connected[vertex]
 }
 
 func (dfs *DepthFirstSearch) Count() int {
@@ -34,7 +34,7 @@ func (dfs *DepthFirstSearch) Count() int {
 }
 
 func (dfs *DepthFirstSearch) validateVertex(v int) {
-	if v < 0 || v >= len(dfs.marked) {
+	if v < 0 || v >= len(dfs.connected) {
 		panic("Vertex out of bounds")
 	}
 }
