@@ -5,7 +5,6 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/node"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/queue"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/stack"
 )
@@ -17,7 +16,7 @@ func main() {
 	printMsg("Stack")
 	s := stack.NewEmptyStack()
 	for i := 0; i < nToPush; i++ {
-		s.Push(node.Item(i))
+		s.Push(i)
 	}
 	for i := 0; i < nToPop; i++ {
 		s.Pop()
@@ -32,7 +31,7 @@ func main() {
 	printMsg("Queue")
 	q := queue.NewEmptyQueue()
 	for i := 0; i < nToPush; i++ {
-		q.Push(node.Item(i))
+		q.Push(i)
 	}
 	for i := 0; i < nToPop; i++ {
 		q.Pop()
