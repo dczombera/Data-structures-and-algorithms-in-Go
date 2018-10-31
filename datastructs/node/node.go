@@ -1,8 +1,6 @@
 package node
 
 type Node struct {
-	Item Item
+	Item int
 	Next *Node
 }
-
-type Item int
