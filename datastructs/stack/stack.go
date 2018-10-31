@@ -6,26 +6,26 @@ import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/node"
 )
 
-type stack struct {
+type Stack struct {
 	First *node.Node
 	Size  int
 }
 
-func NewStack(n *node.Node) stack {
-	return stack{n, 1}
+func NewStack(n *node.Node) Stack {
+	return Stack{n, 1}
 }
 
-func NewEmptyStack() stack {
-	return stack{nil, 0}
+func NewEmptyStack() Stack {
+	return Stack{nil, 0}
 }
 
-func (s *stack) Push(i node.Item) {
+func (s *Stack) Push(i int) {
 	n := &node.Node{i, s.First}
 	s.First = n
 	s.Size++
 }
 
-func (s *stack) Pop() (node.Item, error) {
+func (s *Stack) Pop() (int, error) {
 	var n *node.Node
 	if s.IsEmpty() {
 		return n.Item, errors.New("Stack is empty!")
@@ -37,7 +37,7 @@ func (s *stack) Pop() (node.Item, error) {
 	return n.Item, nil
 }
 
-func (s *stack) Peek() (node.Item, error) {
+func (s *Stack) Peek() (int, error) {
 	var n *node.Node
 	if s.IsEmpty() {
 		return n.Item, errors.New("Stack is empty!")
@@ -45,6 +45,6 @@ func (s *stack) Peek() (node.Item, error) {
 	return s.First.Item, nil
 }
 
-func (s *stack) IsEmpty() bool {
+func (s *Stack) IsEmpty() bool {
 	return s.Size == 0
 }

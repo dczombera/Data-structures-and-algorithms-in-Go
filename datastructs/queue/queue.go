@@ -20,7 +20,7 @@ func NewEmptyQueue() queue {
 	return queue{nil, nil, 0}
 }
 
-func (q *queue) Push(i node.Item) {
+func (q *queue) Push(i int) {
 	oldLast := q.Last
 	q.Last = &node.Node{i, nil}
 	if q.IsEmpty() {
@@ -31,7 +31,7 @@ func (q *queue) Push(i node.Item) {
 	q.Size++
 }
 
-func (q *queue) Pop() (node.Item, error) {
+func (q *queue) Pop() (int, error) {
 	var n *node.Node
 	if q.IsEmpty() {
 		return n.Item, errors.New("Queue is empty!")
@@ -48,9 +48,9 @@ func (q *queue) Pop() (node.Item, error) {
 	return n.Item, nil
 }
 
-func (q *queue) Peek() (node.Item, error) {
+func (q *queue) Peek() (int, error) {
 	if q.IsEmpty() {
-		return node.Item(0), errors.New("There is nothing to peek, queue is empty!")
+		return 0, errors.New("There is nothing to peek, queue is empty!")
 	}
 
 	return q.First.Item, nil
