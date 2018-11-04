@@ -10,12 +10,12 @@ type CC struct {
 }
 
 func NewCC(g *graph.Graph) *CC {
-	size := g.Vertices() + 1
+	size := g.Vertices()
 	cc := CC{make([]int, size), make([]int, size), make([]bool, size), 0}
 	for v := 0; v < g.Vertices(); v++ {
 		if !cc.marked[v] {
-			cc.countCC++
 			cc.dfs(g, v)
+			cc.countCC++
 		}
 	}
 	return &cc

@@ -24,7 +24,7 @@ var testCases = []testCase{
 		graphSize:         7,
 		edges:             [][]int{{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}},
 		connectedVertices: [][]int{{0, 1}, {2, 6}, {5, 0}, {3, 2}, {6, 0}},
-		verticesIds:       []VerticeId{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 1}},
+		verticesIds:       []VerticeId{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}},
 		countCC:           1,
 	},
 	{
@@ -40,14 +40,14 @@ var testCases = []testCase{
 			{6, 4}, {6, 5}, {6, 6}, {6, 7},
 			{7, 4}, {7, 5}, {7, 6}, {7, 7},
 		},
-		verticesIds: []VerticeId{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 2}, {5, 2}, {6, 2}, {7, 2}},
+		verticesIds: []VerticeId{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 1}, {5, 1}, {6, 1}, {7, 1}},
 		countCC:     2,
 	},
 	{
 		graphSize:         5,
 		edges:             [][]int{},
 		connectedVertices: [][]int{{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}},
-		verticesIds:       []VerticeId{{0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}},
+		verticesIds:       []VerticeId{{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}},
 		countCC:           5,
 	},
 }
