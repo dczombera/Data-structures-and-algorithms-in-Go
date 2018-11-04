@@ -47,7 +47,7 @@ func NewDFSCyle(g *graph.Graph) *Cycle {
 func (c *Cycle) dfs(g *graph.Graph, u, v int) {
 	c.marked[v] = true
 	for _, w := range g.AdjacencyList(v) {
-		if c.cycle != nil {
+		if c.HasCycle() {
 			return
 		}
 
@@ -107,7 +107,10 @@ func (c *Cycle) HasCycle() bool {
 }
 
 func (c *Cycle) Cycle() []int {
-	return c.cycle.items
+	if c.HasCycle() {
+		return c.cycle.items
+	}
+	return nil
 }
 
 func (c *Cycle) initCycle() {
