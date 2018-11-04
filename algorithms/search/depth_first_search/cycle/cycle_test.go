@@ -20,7 +20,7 @@ func TestCycleSelfLoop(t *testing.T) {
 			cyclePath: []int{2, 2},
 		},
 		{
-			graphSize: 3,
+			graphSize: 2,
 			edges:     [][]int{{1, 1}, {2, 2}, {1, 2}},
 			cyclePath: []int{1, 1},
 		},
