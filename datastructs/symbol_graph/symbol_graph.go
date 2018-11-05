@@ -31,7 +31,9 @@ func NewSymbolGraph(filename string, delimiter string) *SymbolGraph {
 	for scanner.Scan() {
 		tokens := strings.Split(scanner.Text(), delimiter)
 		for _, t := range tokens {
-			sg.keys[t] = len(sg.keys)
+			if !sg.Contains(t) {
+				sg.keys[t] = len(sg.keys)
+			}
 		}
 	}
 
@@ -42,7 +44,12 @@ func NewSymbolGraph(filename string, delimiter string) *SymbolGraph {
 
 	g := graph.NewGraph(len(sg.keys))
 	// Rewind reader in order to avoid creation of new scanner
-	f.Seek(0, 0)
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		panic(err)
+	}
+	scanner = bufio.NewScanner(f)
+
 	// connect first vertex on each line with all other on same line
 	for scanner.Scan() {
 		tokens := strings.Split(scanner.Text(), delimiter)
@@ -51,11 +58,12 @@ func NewSymbolGraph(filename string, delimiter string) *SymbolGraph {
 			g.AddEdge(v, sg.keys[t])
 		}
 	}
+	sg.graph = &g
 
 	return &sg
 }
 
-func (sg *SymbolGraph) contains(s string) bool {
+func (sg *SymbolGraph) Contains(s string) bool {
 	_, ok := sg.keys[s]
 	return ok
 }
