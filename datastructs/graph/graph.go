@@ -1,5 +1,9 @@
 package graph
 
+import (
+	"fmt"
+)
+
 type Bag struct {
 	items []int
 	Size  int
@@ -29,7 +33,7 @@ func (g *Graph) AddEdge(v, w int) {
 func (g *Graph) validateVertices(vertices ...int) {
 	for _, v := range vertices {
 		if v < 0 || v >= g.vertices {
-			panic("vertix out of graph bounds")
+			panic(fmt.Sprintf("vertix %v out of graph bounds", v))
 		}
 	}
 }
