@@ -2,8 +2,6 @@
 package dfs_cycle
 
 import (
-	"fmt"
-
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/graph"
 )
 
@@ -57,7 +55,6 @@ func (c *Cycle) dfs(g *graph.Graph, u, v int) {
 		} else if w != u {
 			c.initCycle()
 			for x := v; x != w; x = c.edgeTo[x] {
-				fmt.Println(x)
 				c.cycle.Add(x)
 			}
 			c.cycle.Add(w)
