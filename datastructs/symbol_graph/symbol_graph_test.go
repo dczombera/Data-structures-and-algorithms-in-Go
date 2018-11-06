@@ -73,13 +73,11 @@ func TestMultipleOccurenceOfSameVertex(t *testing.T) {
 	}
 
 	sg := NewSymbolGraph("fixtures/movies.txt", "/")
-	index, err := sg.indexOf(tc.name)
+	index, err := sg.IndexOf(tc.name)
 	if err != nil {
 		t.Errorf("Got error %v, want index of actor %v", err, tc.name)
 	}
 
 	adj := sg.Graph().AdjacencyList(index)
 	if !isSameListOfVertices(tc.adj, adj) {
-		t.Errorf("Adjacency list of %v does not include correct vertices", tc.name)
-	}
-}
+		t.Errorf("Adjacency list of %v does not include correct vertices", tc.name)}

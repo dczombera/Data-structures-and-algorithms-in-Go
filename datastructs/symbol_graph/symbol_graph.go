@@ -68,7 +68,7 @@ func (sg *SymbolGraph) Contains(s string) bool {
 	return ok
 }
 
-func (sg *SymbolGraph) indexOf(s string) (int, error) {
+func (sg *SymbolGraph) IndexOf(s string) (int, error) {
 	i, ok := sg.keys[s]
 	if !ok {
 		return -1, errors.New(fmt.Sprintf("vertex with name %v does not exist", s))
@@ -76,7 +76,7 @@ func (sg *SymbolGraph) indexOf(s string) (int, error) {
 	return i, nil
 }
 
-func (sg *SymbolGraph) nameOf(i int) string {
+func (sg *SymbolGraph) NameOf(i int) string {
 	sg.validateVertex(i)
 	return sg.reverseKeys[i]
 }
