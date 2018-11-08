@@ -80,4 +80,6 @@ func TestMultipleOccurenceOfSameVertex(t *testing.T) {
 
 	adj := sg.Graph().AdjacencyList(index)
 	if !isSameListOfVertices(tc.adj, adj) {
-		t.Errorf("Adjacency list of %v does not include correct vertices", tc.name)}
+		t.Errorf("Adjacency list of %v does not include correct vertices", tc.name)
+	}
+}
