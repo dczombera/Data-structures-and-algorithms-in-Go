@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/breadth_first_paths"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/breadth_first_search/breadth_first_paths"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/symbol_graph"
 )
 
