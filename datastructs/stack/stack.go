@@ -11,8 +11,8 @@ type Stack struct {
 	Size  int
 }
 
-func NewStack(n *node.Node) Stack {
-	return Stack{n, 1}
+func NewStack() *Stack {
+	return &Stack{nil, 0}
 }
 
 func NewEmptyStack() Stack {
