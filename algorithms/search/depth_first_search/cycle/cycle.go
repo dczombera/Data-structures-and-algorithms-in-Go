@@ -111,6 +111,5 @@ func (c *Cycle) Cycle() []int {
 }
 
 func (c *Cycle) initCycle() {
-	b := &Bag{make([]int, 0, len(c.marked)), 0}
-	c.cycle = b
+	c.cycle = &Bag{make([]int, 0, len(c.marked)), 0}
 }
