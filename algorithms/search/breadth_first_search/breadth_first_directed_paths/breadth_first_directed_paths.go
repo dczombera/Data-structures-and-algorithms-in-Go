@@ -65,6 +65,15 @@ func (bfdp *BreadthFirstDirectedPaths) PathTo(v int) (stack.Stack, error) {
 	return stack, nil
 }
 
+func (bfdp *BreadthFirstDirectedPaths) DistTo(v int) (int, error) {
+	bfdp.validateVertex(v)
+	if !bfdp.HasPathTo(v) {
+		return -1, errors.New(fmt.Sprintf("No path between %v and %v", bfdp.sourceVertex, v))
+	}
+
+	return bfdp.distTo[v], nil
+}
+
 func (bfdp *BreadthFirstDirectedPaths) validateVertex(v int) {
 	if v < 0 || v >= len(bfdp.marked) {
 		panic("Vertex out of bounds")
