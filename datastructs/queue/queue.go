@@ -6,21 +6,21 @@ import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/node"
 )
 
-type queue struct {
+type Queue struct {
 	First *node.Node
 	Last  *node.Node
 	Size  int
 }
 
-func NewQueue(n *node.Node) queue {
-	return queue{n, n, 1}
+func NewQueue(n *node.Node) Queue {
+	return Queue{n, n, 1}
 }
 
-func NewEmptyQueue() queue {
-	return queue{nil, nil, 0}
+func NewEmptyQueue() Queue {
+	return Queue{nil, nil, 0}
 }
 
-func (q *queue) Push(i int) {
+func (q *Queue) Push(i int) {
 	oldLast := q.Last
 	q.Last = &node.Node{i, nil}
 	if q.IsEmpty() {
@@ -31,7 +31,7 @@ func (q *queue) Push(i int) {
 	q.Size++
 }
 
-func (q *queue) Pop() (int, error) {
+func (q *Queue) Pop() (int, error) {
 	var n *node.Node
 	if q.IsEmpty() {
 		return n.Item, errors.New("Queue is empty!")
@@ -48,7 +48,7 @@ func (q *queue) Pop() (int, error) {
 	return n.Item, nil
 }
 
-func (q *queue) Peek() (int, error) {
+func (q *Queue) Peek() (int, error) {
 	if q.IsEmpty() {
 		return 0, errors.New("There is nothing to peek, queue is empty!")
 	}
@@ -56,6 +56,6 @@ func (q *queue) Peek() (int, error) {
 	return q.First.Item, nil
 }
 
-func (q *queue) IsEmpty() bool {
+func (q *Queue) IsEmpty() bool {
 	return q.Size == 0
 }
