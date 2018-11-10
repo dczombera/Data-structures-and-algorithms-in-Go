@@ -29,16 +29,12 @@ func (dc *DirectedCycle) dfs(g *directed_graph.Digraph, v int) {
 	for _, w := range g.AdjacencyList(v) {
 		if dc.HasCycle() {
 			return
-		}
-
-		if !dc.marked[w] {
+		} else if !dc.marked[w] {
 			dc.edgeTo[w] = v
 			dc.dfs(g, w)
-		}
-
-		if dc.onStack[w] {
+		} else if dc.onStack[w] {
 			dc.cycle = stack.NewStack()
-			for x := v; x != w; x = dc.edgeTo[v] {
+			for x := v; x != w; x = dc.edgeTo[x] {
 				dc.cycle.Push(x)
 			}
 			dc.cycle.Push(w)
