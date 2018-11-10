@@ -1,8 +1,6 @@
 package depth_first_order
 
 import (
-	"log"
-
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/directed_graph"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/queue"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/stack"
@@ -38,7 +36,6 @@ func (dfo *DephtFirstOrder) dfs(g *directed_graph.Digraph, v int) {
 	dfo.preCounter++
 	for _, w := range g.AdjacencyList(v) {
 		if !dfo.marked[w] {
-			log.Println(w)
 			dfo.dfs(g, w)
 		}
 	}
@@ -76,7 +73,7 @@ func (dfo *DephtFirstOrder) PostPos(v int) int {
 
 func (dfo *DephtFirstOrder) ReversePostPos(v int) int {
 	dfo.validateVertex(v)
-	return dfo.postCounter - dfo.postPos[v]
+	return dfo.postCounter - dfo.postPos[v] - 1
 }
 
 func (dfo *DephtFirstOrder) validateVertex(v int) {
