@@ -35,8 +35,8 @@ var testCases = []testCase{
 		postOrder:        []int{4, 5, 1, 12, 11, 10, 9, 6, 0, 3, 2, 7, 8},
 		reversePostOrder: []int{8, 7, 2, 3, 0, 6, 9, 10, 11, 12, 1, 5, 4},
 		prePos:           []int{0, 3, 9, 10, 2, 1, 4, 11, 12, 5, 8, 6, 7},
-		postPos:          []int{12, 9, 3, 2, 10, 11, 8, 1, 0, 7, 4, 6, 5},
-		reversePostPos:   []int{5, 6, 4, 7, 0, 1, 8, 11, 10, 2, 3, 9, 12},
+		postPos:          []int{8, 2, 10, 9, 0, 1, 7, 11, 12, 6, 5, 4, 3},
+		reversePostPos:   []int{4, 10, 2, 3, 12, 11, 5, 1, 0, 6, 7, 8, 9},
 	},
 }
 
@@ -73,6 +73,24 @@ func TestDepthFirstOrder(t *testing.T) {
 				t.Errorf("Got vertex %v in reverse postorder iteration, want %v", curr.Item, want)
 			}
 			curr = curr.Next
+		}
+
+		for i, pos := range tc.prePos {
+			if dfo.PrePos(i) != pos {
+				t.Errorf("Got pre-position %v for vertex %v, want %v", dfo.PrePos(i), i, pos)
+			}
+		}
+
+		for i, pos := range tc.postPos {
+			if dfo.PostPos(i) != pos {
+				t.Errorf("Got post-position %v for vertex %v, want %v", dfo.PostPos(i), i, pos)
+			}
+		}
+
+		for i, pos := range tc.reversePostPos {
+			if dfo.ReversePostPos(i) != pos {
+				t.Errorf("Got reverse-position %v for vertex %v, want %v", dfo.ReversePostPos(i), i, pos)
+			}
 		}
 	}
 }
