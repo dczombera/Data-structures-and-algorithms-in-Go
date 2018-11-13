@@ -3,7 +3,7 @@ package edge_weighted_graph
 import (
 	"testing"
 
-	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/edge"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
 
 type testCase struct {

@@ -1,6 +1,6 @@
 package edge_weighted_graph
 
-import "github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/edge"
+import "github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 
 type EdgeWeightedGraph struct {
 	vertices int
