@@ -3,8 +3,8 @@ package topological_order
 import (
 	"errors"
 
-	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/depth_first_search/depth_first_order"
-	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/depth_first_search/directed_cycle"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/depth_first_search/depth_first_order"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/depth_first_search/directed_cycle"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/directed_graph"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/stack"
 )

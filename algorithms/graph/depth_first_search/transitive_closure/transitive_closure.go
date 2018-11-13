@@ -5,7 +5,7 @@
 package transitive_closure
 
 import (
-	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/depth_first_search/directed_dfs"
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/depth_first_search/directed_dfs"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/directed_graph"
 )
 
