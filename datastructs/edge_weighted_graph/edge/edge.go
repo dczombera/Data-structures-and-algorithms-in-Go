@@ -14,6 +14,10 @@ func NewEdge(v, w int, weight float64) Edge {
 	return Edge{v, w, weight}
 }
 
+func NewEmptyEdge() Edge {
+	return Edge{0, 0, 0.0}
+}
+
 func (e Edge) Either() int {
 	return e.eitherVertex
 }
