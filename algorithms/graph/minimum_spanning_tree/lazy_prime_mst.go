@@ -15,7 +15,7 @@ type LazyPrimeMST struct {
 var initCap = 8
 
 func NewLazyPrimeMST(g *edge_weighted_graph.EdgeWeightedGraph) *LazyPrimeMST {
-	mst := &LazyPrimeMST{make([]edge.Edge, initCap), 0.0, NewMinPriorityQueue(), make([]bool, g.VerticesCount())}
+	mst := &LazyPrimeMST{make([]edge.Edge, 0, initCap), 0.0, NewMinPriorityQueue(), make([]bool, g.VerticesCount())}
 	for v := 0; v < g.VerticesCount(); v++ {
 		if !mst.marked[v] {
 			mst.prime(g, v)
