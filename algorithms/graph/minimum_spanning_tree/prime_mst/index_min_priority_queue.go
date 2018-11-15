@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// IndexMinPriorityQueue is an indexed minimum priority queue using an indexed binary heap as underlying data structure
 type IndexMinPriorityQueue struct {
 	pq      []int
 	qp      []int

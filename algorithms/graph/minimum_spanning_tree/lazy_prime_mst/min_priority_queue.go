@@ -6,6 +6,7 @@ import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
 
+// MinPriorityQueue is a minimum priority queue using a binary heap as underlying data structure
 type MinPriorityQueue struct {
 	pq []edge.Edge
 	n  int

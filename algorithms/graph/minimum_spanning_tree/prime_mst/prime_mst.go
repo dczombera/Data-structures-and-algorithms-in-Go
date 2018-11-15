@@ -7,6 +7,7 @@ import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
 
+// PrimeMST is a data type for computing the minimum spanning tree/forest in an edge weighted undirected graph using Prime’s algorithm with an indexed binary heap
 type PrimeMST struct {
 	edgeTo []*edge.Edge
 	mst    []edge.Edge

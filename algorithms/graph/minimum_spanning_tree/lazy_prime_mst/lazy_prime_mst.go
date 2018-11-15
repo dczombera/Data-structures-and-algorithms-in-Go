@@ -5,6 +5,7 @@ import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
 
+// LazyPrimeMST is a data type for computing the minimum spanning tree/forest in an edge weighted undirected graph using a lazy version of Prim’s algorithm with a binary heap
 type LazyPrimeMST struct {
 	mst    []edge.Edge
 	weight float64
@@ -18,6 +19,7 @@ func NewLazyPrimeMST(g *edge_weighted_graph.EdgeWeightedGraph) *LazyPrimeMST {
 	mst := &LazyPrimeMST{make([]edge.Edge, 0, initCap), 0.0, NewMinPriorityQueue(), make([]bool, g.VerticesCount())}
 	for v := 0; v < g.VerticesCount(); v++ {
 		if !mst.marked[v] {
+			// Run from each vertex to find minimum spanning forest
 			mst.prime(g, v)
 		}
 	}
