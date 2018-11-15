@@ -1,4 +1,4 @@
-package minimum_spanning_tree
+package lazy_prime_mst
 
 import (
 	"errors"

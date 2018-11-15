@@ -1,4 +1,4 @@
-package minimum_spanning_tree
+package lazy_prime_mst
 
 import (
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph"
