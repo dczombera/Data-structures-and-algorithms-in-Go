@@ -18,7 +18,7 @@ type IndexWeight struct {
 func TestMinPriorityQueue(t *testing.T) {
 	testCases := []testCaseQueue{
 		{
-			data:            []IndexWeight{{0, 2.3}, {1, 0.42}, {2, 13.37}, {3, 0.42}, {4, -0.42}, {5, 0.0}, {6, -0.41}},
+			data:            []IndexWeight{{5, 0.0}, {2, 13.37}, {0, 2.3}, {1, 0.42}, {6, -0.41}, {3, 0.42}, {4, -0.42}},
 			decreaseWeights: []IndexWeight{{1, -0.42}, {2, 3.1}},
 			increaseWeights: []IndexWeight{{4, -0.41}, {2, 42.42}, {3, 41.14}},
 			wantWeight:      []IndexWeight{{0, 2.3}, {1, -0.42}, {2, 42.42}, {3, 41.14}, {4, -0.41}, {5, 0.0}, {6, -0.41}},
