@@ -48,7 +48,7 @@ func (pq *IndexMinPriorityQueue) Insert(i int, weight Weight) {
 	pq.pq[pq.size] = i
 	pq.qp[i] = pq.size
 	pq.weights[i] = &weight
-	pq.swim(i)
+	pq.swim(pq.size)
 }
 
 func (pq *IndexMinPriorityQueue) MinIndex() int {
