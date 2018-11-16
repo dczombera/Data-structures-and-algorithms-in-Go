@@ -1,6 +1,7 @@
 package prime_mst
 
 import (
+	"log"
 	"math"
 
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph"
@@ -40,7 +41,10 @@ func (mst *PrimeMST) prime(g *edge_weighted_graph.EdgeWeightedGraph, s int) {
 	mst.distTo[s] = 0.0
 	mst.pq.Insert(s, mst.distTo[s])
 	for !mst.pq.Empty() {
-		v := mst.pq.DelMin()
+		v, err := mst.pq.DelMin()
+		if err != nil {
+			log.Fatalln(err)
+		}
 		mst.scan(g, v)
 	}
 }
