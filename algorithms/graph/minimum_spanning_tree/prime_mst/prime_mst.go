@@ -24,7 +24,6 @@ func NewPrimeMST(g *edge_weighted_graph.EdgeWeightedGraph) PrimeMST {
 	for i := 0; i < len(distTo); i++ {
 		distTo[i] = Weight(math.Inf(1))
 	}
-
 	mst := PrimeMST{make([]*edge.Edge, maxSize), make([]edge.Edge, 0), distTo, 0.0, make([]bool, maxSize), NewIndexMinPriorityQueue(maxSize)}
 	for v := 0; v < maxSize; v++ {
 		// Run from each vertex to find minimum spanning forest
@@ -52,6 +51,7 @@ func (mst *PrimeMST) prime(g *edge_weighted_graph.EdgeWeightedGraph, s int) {
 func (mst *PrimeMST) scan(g *edge_weighted_graph.EdgeWeightedGraph, v int) {
 	mst.marked[v] = true
 	for _, e := range g.AdjacencyList(v) {
+		edgeCopy := e
 		w := e.Other(v)
 		if mst.marked[w] {
 			// v-w is obsolete
@@ -60,7 +60,7 @@ func (mst *PrimeMST) scan(g *edge_weighted_graph.EdgeWeightedGraph, v int) {
 
 		weight := Weight(e.Weight())
 		if weight < mst.distTo[w] {
-			mst.edgeTo[w] = &e
+			mst.edgeTo[w] = &edgeCopy
 			mst.distTo[w] = weight
 			if mst.pq.Contains(w) {
 				mst.pq.DecreaseWeight(w, weight)
@@ -77,9 +77,9 @@ func (mst *PrimeMST) initMST() {
 }
 
 func (mst *PrimeMST) normalizeMST() {
-	for _, e := range mst.edgeTo {
-		if e != nil {
-			mst.mst = append(mst.mst, *e)
+	for _, edge := range mst.edgeTo {
+		if edge != nil {
+			mst.mst = append(mst.mst, *edge)
 		}
 	}
 }
