@@ -1,6 +1,7 @@
 package prime_mst
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -64,9 +65,9 @@ func (pq *IndexMinPriorityQueue) MinWeight() Weight {
 	return *pq.weights[pq.pq[1]]
 }
 
-func (pq *IndexMinPriorityQueue) DelMin() int {
+func (pq *IndexMinPriorityQueue) DelMin() (int, error) {
 	if pq.Empty() {
-		panic("Priority queue is empty")
+		return -1, errors.New("Couldn't delete the minimum, priority queue is empty")
 	}
 	min := pq.pq[1]
 	pq.exch(1, pq.size)
@@ -75,7 +76,7 @@ func (pq *IndexMinPriorityQueue) DelMin() int {
 	pq.weights[min] = nil
 	pq.size--
 	pq.sink(1)
-	return min
+	return min, nil
 }
 
 func (pq *IndexMinPriorityQueue) WeightOf(i int) Weight {
