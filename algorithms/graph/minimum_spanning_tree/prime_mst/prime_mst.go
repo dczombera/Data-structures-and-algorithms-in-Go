@@ -4,6 +4,7 @@ import (
 	"log"
 	"math"
 
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/minimum_spanning_tree/priority_queue"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
@@ -12,19 +13,19 @@ import (
 type PrimeMST struct {
 	edgeTo []*edge.Edge
 	mst    []edge.Edge
-	distTo []Weight
+	distTo []priority_queue.Weight
 	weight float64
 	marked []bool
-	pq     *IndexMinPriorityQueue
+	pq     *priority_queue.IndexMinPriorityQueue
 }
 
 func NewPrimeMST(g *edge_weighted_graph.EdgeWeightedGraph) PrimeMST {
 	maxSize := g.VerticesCount()
-	distTo := make([]Weight, maxSize)
+	distTo := make([]priority_queue.Weight, maxSize)
 	for i := 0; i < len(distTo); i++ {
-		distTo[i] = Weight(math.Inf(1))
+		distTo[i] = priority_queue.Weight(math.Inf(1))
 	}
-	mst := PrimeMST{make([]*edge.Edge, maxSize), make([]edge.Edge, 0), distTo, 0.0, make([]bool, maxSize), NewIndexMinPriorityQueue(maxSize)}
+	mst := PrimeMST{make([]*edge.Edge, maxSize), make([]edge.Edge, 0), distTo, 0.0, make([]bool, maxSize), priority_queue.NewIndexMinPriorityQueue(maxSize)}
 	for v := 0; v < maxSize; v++ {
 		// Run from each vertex to find minimum spanning forest
 		if !mst.marked[v] {
@@ -58,7 +59,7 @@ func (mst *PrimeMST) scan(g *edge_weighted_graph.EdgeWeightedGraph, v int) {
 			continue
 		}
 
-		weight := Weight(e.Weight())
+		weight := priority_queue.Weight(e.Weight())
 		if weight < mst.distTo[w] {
 			mst.edgeTo[w] = &edgeCopy
 			mst.distTo[w] = weight

@@ -1,6 +1,7 @@
 package lazy_prime_mst
 
 import (
+	"github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/minimum_spanning_tree/priority_queue"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_graph/edge"
 )
@@ -9,14 +10,14 @@ import (
 type LazyPrimeMST struct {
 	mst    []edge.Edge
 	weight float64
-	pq     MinPriorityQueue
+	pq     priority_queue.MinPriorityQueue
 	marked []bool
 }
 
 var initCap = 8
 
 func NewLazyPrimeMST(g *edge_weighted_graph.EdgeWeightedGraph) *LazyPrimeMST {
-	mst := &LazyPrimeMST{make([]edge.Edge, 0, initCap), 0.0, NewMinPriorityQueue(), make([]bool, g.VerticesCount())}
+	mst := &LazyPrimeMST{make([]edge.Edge, 0, initCap), 0.0, priority_queue.NewMinPriorityQueue(), make([]bool, g.VerticesCount())}
 	for v := 0; v < g.VerticesCount(); v++ {
 		if !mst.marked[v] {
 			// Run from each vertex to find minimum spanning forest
