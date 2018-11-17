@@ -1,4 +1,4 @@
-package prime_mst
+package priority_queue
 
 import (
 	"errors"

@@ -1,8 +1,8 @@
-package prime_mst
+package priority_queue
 
 import "testing"
 
-type testCaseQueue struct {
+type testCaseIndexQueue struct {
 	data            []IndexWeight
 	decreaseWeights []IndexWeight
 	increaseWeights []IndexWeight
@@ -15,8 +15,8 @@ type IndexWeight struct {
 	weight Weight
 }
 
-func TestMinPriorityQueue(t *testing.T) {
-	testCases := []testCaseQueue{
+func TestIndexMinPriorityQueue(t *testing.T) {
+	testCases := []testCaseIndexQueue{
 		{
 			data:            []IndexWeight{{5, 0.0}, {2, 13.37}, {0, 2.3}, {1, 0.42}, {6, -0.41}, {3, 0.42}, {4, -0.42}},
 			decreaseWeights: []IndexWeight{{1, -0.42}, {2, 3.1}},
@@ -60,7 +60,7 @@ func TestMinPriorityQueue(t *testing.T) {
 
 }
 
-func TestMinPriorityQueueError(t *testing.T) {
+func TestIndexMinPriorityQueueError(t *testing.T) {
 	pq := NewIndexMinPriorityQueue(0)
 	_, e := pq.DelMin()
 	if e == nil {
