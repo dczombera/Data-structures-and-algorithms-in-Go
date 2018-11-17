@@ -1,4 +1,4 @@
-package lazy_prime_mst
+package priority_queue
 
 import (
 	"testing"
