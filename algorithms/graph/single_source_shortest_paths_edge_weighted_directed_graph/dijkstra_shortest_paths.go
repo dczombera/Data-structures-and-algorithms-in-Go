@@ -2,10 +2,9 @@ package dijkstra_shortest_paths
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"math"
-
-	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/stack"
 
 	pq "github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/minimum_spanning_tree/priority_queue"
 	graph "github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_directed_graph"
@@ -37,18 +36,20 @@ func NewDijkstraSP(g *graph.EdgeWeightedDigraph, s int) *DijkstraSP {
 			sp.relax(e)
 		}
 	}
+
+	return sp
 }
 
 func (sp *DijkstraSP) relax(e graph.DirectedEdge) {
-	v := e.From()
-	w := e.To()
-	if sp.distTo[w] > sp.distTo[v]+e.Weight() {
-		sp.distTo[w] = sp.distTo[v] + e.Weight()
+	v := e.From
+	w := e.To
+	if sp.distTo[w] > (sp.distTo[v] + e.Weight) {
+		sp.distTo[w] = sp.distTo[v] + e.Weight
 		sp.edgeTo[w] = e
 		if sp.pq.Contains(w) {
-			sp.pq.DecreaseWeight(w, pq.Weight(e.Weight()))
+			sp.pq.DecreaseWeight(w, pq.Weight(sp.distTo[w]))
 		} else {
-			sp.pq.Insert(w, pq.Weight(e.Weight()))
+			sp.pq.Insert(w, pq.Weight(sp.distTo[w]))
 		}
 	}
 }
@@ -58,25 +59,32 @@ func (sp *DijkstraSP) HasPathTo(v int) bool {
 	return sp.distTo[v] < math.Inf(1)
 }
 
+func (sp *DijkstraSP) DistTo(v int) (float64, error) {
+	sp.validateVertex(v)
+	if !sp.HasPathTo(v) {
+		return -1, errors.New(fmt.Sprintf("No shortest path found from source %v to %v\n", sp.source, v))
+	}
+	return sp.distTo[v], nil
+}
+
 func (sp *DijkstraSP) PathTo(v int) ([]graph.DirectedEdge, error) {
 	sp.validateVertex(v)
 	if !sp.HasPathTo(v) {
-		return graph.DirectedEdge(), errors.New("There is no shortest path between source vertex %v and %v", sp.source, v)
+		return []graph.DirectedEdge{}, errors.New(fmt.Sprintf("There is no shortest path between source vertex %v and %v", sp.source, v))
 	}
 
-	// TODO Implement stack for directed edge
-	pathStack := stack.NewEmptyStack()
+	pathStack := graph.Stack{}
 	curr := graph.DirectedEdge{}
-	for curr = sp.edgeTo[v]; curr.From() != sp.source; curr = sp.edgeTo[v] {
+	for curr = sp.edgeTo[v]; curr.From != sp.source; curr = sp.edgeTo[curr.From] {
 		pathStack.Push(curr)
 	}
 	pathStack.Push(curr)
-	// We want the convenience of using range, therefore we return a slice
-	path := make([]graph.DirectedEdge, 0, pathStack.Size())
-	for curr = pathStack.First; curr != nil; curr = curr.Next {
-		path = append(path, curr)
-	}
 
+	// We want the convenience of using range, therefore we return a slice
+	path := make([]graph.DirectedEdge, 0, pathStack.Size)
+	for curr := pathStack.First; curr != nil; curr = curr.Next {
+		path = append(path, curr.Item)
+	}
 	return path, nil
 }
 
