@@ -23,8 +23,8 @@ func (g *EdgeWeightedDigraph) EdgesCount() int {
 
 func (g *EdgeWeightedDigraph) AddEdge(e DirectedEdge) {
 	g.validateEdge(e)
-	g.adj[e.From()] = append(g.adj[e.From()], e)
-	g.indegree[e.To()]++
+	g.adj[e.From] = append(g.adj[e.From], e)
+	g.indegree[e.To]++
 	g.edges++
 }
 
@@ -54,8 +54,8 @@ func (g *EdgeWeightedDigraph) Edges() []DirectedEdge {
 }
 
 func (g *EdgeWeightedDigraph) validateEdge(e DirectedEdge) {
-	g.validateVertex(e.From())
-	g.validateVertex(e.To())
+	g.validateVertex(e.From)
+	g.validateVertex(e.To)
 }
 
 func (g *EdgeWeightedDigraph) validateVertex(v int) {
