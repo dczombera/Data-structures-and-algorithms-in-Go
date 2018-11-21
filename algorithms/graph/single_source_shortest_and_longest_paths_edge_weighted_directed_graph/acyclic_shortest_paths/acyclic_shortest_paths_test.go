@@ -23,7 +23,7 @@ func TestAcyclicShortestPaths(t *testing.T) {
 	var testCases = []testCaseAcyclicSP{
 		{
 			graphSize:    5,
-			edges:        []graph.DirectedEdge{{0, 1, 0.1}, {1, 2, 0.1}, {2, 3, 0.1}, {3, 4, 0.1}},
+			edges:        []graph.DirectedEdge{{0, 1, 0.1}, {1, 2, 0.1}, {2, 3, 0.1}, {1, 3, 0.4}, {3, 4, 0.1}, {0, 4, 0.2}},
 			sourceVertex: 0,
 			paths: []shortestPath{
 				{
@@ -43,8 +43,8 @@ func TestAcyclicShortestPaths(t *testing.T) {
 				},
 				{
 					to:     4,
-					distTo: 0.4,
-					path:   []graph.DirectedEdge{{0, 1, 0.1}, {1, 2, 0.1}, {2, 3, 0.1}, {3, 4, 0.1}},
+					distTo: 0.2,
+					path:   []graph.DirectedEdge{{0, 4, 0.2}},
 				},
 			},
 		},

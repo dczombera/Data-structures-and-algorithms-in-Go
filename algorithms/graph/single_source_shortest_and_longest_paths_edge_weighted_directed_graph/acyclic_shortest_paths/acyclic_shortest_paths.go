@@ -69,7 +69,7 @@ func (asp AcyclicSP) PathTo(v int) (graph.Stack, error) {
 func (asp *AcyclicSP) DistTo(v int) (float64, error) {
 	asp.validateVertex(v)
 	if !asp.HasPathTo(v) {
-		return -1.0, errors.New(fmt.Sprintf("No shortest path found from source %v to %v\n", asp.source, v))
+		return infinity, errors.New(fmt.Sprintf("No shortest path found from source %v to %v\n", asp.source, v))
 	}
 	return asp.distoTo[v], nil
 }
