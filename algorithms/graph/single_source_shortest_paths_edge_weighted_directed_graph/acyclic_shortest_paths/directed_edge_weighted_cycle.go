@@ -30,7 +30,9 @@ func (dc *DirectedEdgeWeightedCycle) dfs(g *graph.EdgeWeightedDigraph, v int) {
 	dc.onStack[v] = true
 	for _, e := range g.AdjacencyList(v) {
 		w := e.To
-		if !dc.marked[w] {
+		if dc.HasCycle() {
+			return
+		} else if !dc.marked[w] {
 			dc.edgeTo[w] = e
 			dc.dfs(g, w)
 		} else if dc.onStack[w] {
@@ -39,7 +41,6 @@ func (dc *DirectedEdgeWeightedCycle) dfs(g *graph.EdgeWeightedDigraph, v int) {
 				dc.cycle.Push(curr)
 			}
 			dc.cycle.Push(curr)
-			return
 		}
 	}
 	dc.onStack[v] = false
