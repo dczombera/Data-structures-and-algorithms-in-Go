@@ -1,4 +1,4 @@
-// Package critical_path_meethod implements solves the parallel precedence-constrained job scheduling problem
+// Package critical_path_method implements solves the parallel precedence-constrained job scheduling problem
 // via the critical path method
 // The constructor expects the name of a file which has following input format
 // - First line:  the number of jobs
