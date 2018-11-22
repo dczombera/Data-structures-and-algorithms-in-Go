@@ -5,16 +5,16 @@
 // - Each following line: duration of jobs, number of precedence constrained jobs, each individual precedence constrained job
 // Example file content:
 // 10
-// 41.0  3  1 7 9
-// 51.0  1  2
-// 50.0  0
-// 36.0  0
-// 38.0  0
-// 45.0  0
-// 21.0  2  3 8
-// 32.0  2  3 8
-// 32.0  1  2
-// 29.0  2  4 6
+// 41.0 3 1 7 9
+// 51.0 1 2
+// 50.0 0
+// 36.0 0
+// 38.0 0
+// 45.0 0
+// 21.0 2 3 8
+// 32.0 2 3 8
+// 32.0 1 2
+// 29.0 2 4 6
 
 package critical_path_method
 
@@ -32,6 +32,7 @@ import (
 type CPM struct {
 	source        int
 	sink          int
+	jobs          int
 	criticalPaths alp.AcyclicLP
 }
 
@@ -44,7 +45,7 @@ func NewCPM(file string) CPM {
 
 	scanner := bufio.NewScanner(f)
 	if !scanner.Scan() {
-		log.Fatalf("Expected file %v to have jobs numer and details for each jobs, got an empty file\n", file)
+		log.Fatalf("Expected file %v to have jobs number and details for each jobs, got an empty file\n", file)
 	}
 	jobs, err := strconv.Atoi(scanner.Text())
 	if err != nil {
@@ -84,7 +85,7 @@ func NewCPM(file string) CPM {
 		log.Fatalln(err)
 	}
 
-	return CPM{source, sink, criticalPaths}
+	return CPM{source, sink, jobs, criticalPaths}
 }
 
 func (cpm CPM) StartTimeOf(v int) float64 {
@@ -92,7 +93,7 @@ func (cpm CPM) StartTimeOf(v int) float64 {
 }
 
 func (cpm CPM) FinishTimeOf(v int) float64 {
-	return cpm.timeOf(v)
+	return cpm.timeOf(v + cpm.jobs)
 }
 
 func (cpm CPM) OverallFinishTime() float64 {
