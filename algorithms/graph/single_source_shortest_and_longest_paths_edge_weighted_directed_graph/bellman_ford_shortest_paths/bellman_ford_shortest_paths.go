@@ -6,13 +6,12 @@ import (
 	"math"
 
 	c "github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/graph/single_source_shortest_and_longest_paths_edge_weighted_directed_graph/acyclic_shortest_paths"
-
 	graph "github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/edge_weighted_directed_graph"
 	"github.com/dczombera/data-structures-and-algorithms-in-go/datastructs/queue"
 )
 
 type BellmanFordSP struct {
-	edgeTo  []graph.DirectedEdge
+	edgeTo  []*graph.DirectedEdge
 	distTo  []float64
 	onQueue []bool
 	queue   queue.Queue
@@ -23,17 +22,17 @@ type BellmanFordSP struct {
 
 var infinity = math.Inf(1)
 
-func NewBellmanFordSp(g *graph.EdgeWeightedDigraph, s int) *BellmanFordSP {
+func NewBellmanFordSP(g *graph.EdgeWeightedDigraph, s int) *BellmanFordSP {
 	size := g.VerticesCount()
 	distTo := make([]float64, size)
 	for i := 0; i < size; i++ {
 		distTo[i] = infinity
 	}
-	sp := &BellmanFordSP{make([]graph.DirectedEdge, size), distTo, make([]bool, size), queue.NewEmptyQueue(), s, 0, graph.Stack{}}
+	sp := &BellmanFordSP{make([]*graph.DirectedEdge, size), distTo, make([]bool, size), queue.NewEmptyQueue(), s, 0, graph.Stack{}}
 	sp.distTo[s] = 0.0
 	sp.queue.Push(s)
 	sp.onQueue[s] = true
-	for !sp.queue.IsEmpty() && !sp.hasNegativeCycle() {
+	for !sp.queue.IsEmpty() && !sp.HasNegativeCycle() {
 		v, err := sp.queue.Pop()
 		checkError(err)
 		sp.onQueue[v] = false
@@ -44,12 +43,13 @@ func NewBellmanFordSp(g *graph.EdgeWeightedDigraph, s int) *BellmanFordSP {
 
 func (sp *BellmanFordSP) relax(g *graph.EdgeWeightedDigraph, v int) {
 	for _, e := range g.AdjacencyList(v) {
+		copy := e
 		w := e.To
 		if sp.distTo[w] > sp.distTo[v]+e.Weight {
-			sp.edgeTo[w] = e
+			sp.edgeTo[w] = &copy
 			sp.distTo[w] = sp.distTo[v] + e.Weight
-			sp.queue.Push(w)
 			if !sp.onQueue[w] {
+				sp.queue.Push(w)
 				sp.onQueue[w] = true
 			}
 		}
@@ -66,15 +66,24 @@ func (sp *BellmanFordSP) findNegativeCycle() bool {
 	size := len(sp.edgeTo)
 	g := graph.NewEdgeWeightedDigraph(size)
 	for i := 0; i < size; i++ {
-		g.AddEdge(sp.edgeTo[i])
+		if sp.edgeTo[i] != nil {
+			g.AddEdge(*sp.edgeTo[i])
+		}
 	}
+
 	cycle := c.NewDirectedEdgeWeightedCycle(g)
-	sp.cycle = cycle.Cycle()
+	if cycle.HasCycle() {
+		sp.cycle = cycle.Cycle()
+	}
 	return sp.cycle.Size > 0
 }
 
-func (sp BellmanFordSP) hasNegativeCycle() bool {
+func (sp BellmanFordSP) HasNegativeCycle() bool {
 	return sp.cycle.Size > 0
+}
+
+func (sp BellmanFordSP) NegativeCycle() graph.Stack {
+	return sp.cycle
 }
 
 func (sp BellmanFordSP) HasPathTo(v int) bool {
@@ -84,21 +93,21 @@ func (sp BellmanFordSP) HasPathTo(v int) bool {
 
 func (sp BellmanFordSP) PathTo(v int) (graph.Stack, error) {
 	sp.validateVertex(v)
-	if sp.hasNegativeCycle() {
+	if sp.HasNegativeCycle() {
 		return graph.Stack{}, errors.New("No shortest paths found because graph has negative cycle")
 	}
 	pathStack := graph.Stack{}
 	curr := sp.edgeTo[v]
 	for ; curr.From != sp.source; curr = sp.edgeTo[curr.From] {
-		pathStack.Push(curr)
+		pathStack.Push(*curr)
 	}
-	pathStack.Push(curr)
+	pathStack.Push(*curr)
 	return pathStack, nil
 }
 
 func (sp BellmanFordSP) DistTo(v int) (float64, error) {
 	sp.validateVertex(v)
-	if sp.hasNegativeCycle() {
+	if sp.HasNegativeCycle() {
 		return infinity, errors.New("No shortest paths found because graph has negative cycle")
 	}
 	return sp.distTo[v], nil
