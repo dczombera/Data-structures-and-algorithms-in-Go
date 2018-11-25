@@ -60,14 +60,20 @@ func main() {
 		}
 
 		j, err := sg.IndexOf(sink)
-		check(err)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		if !paths.HasPathTo(j) {
 			fmt.Printf("%v not connected to %v\n", sink, source)
 			continue
 		}
 
 		path, err := paths.PathTo(j)
-		check(err)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		for curr := path.First; curr != nil; curr = curr.Next {
 			fmt.Print(sg.NameOf(curr.Item))
 			if curr.Next != nil {
