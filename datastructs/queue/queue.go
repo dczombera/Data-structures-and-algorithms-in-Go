@@ -32,13 +32,12 @@ func (q *Queue) Push(i int) {
 }
 
 func (q *Queue) Pop() (int, error) {
-	var n *node.Node
 	if q.IsEmpty() {
-		return n.Item, errors.New("Queue is empty!")
+		return -1, errors.New("Queue is empty")
 	}
 
-	n = q.First
-	q.First = n.Next
+	n := q.First
+	q.First = q.First.Next
 	q.Size--
 
 	if q.IsEmpty() {
