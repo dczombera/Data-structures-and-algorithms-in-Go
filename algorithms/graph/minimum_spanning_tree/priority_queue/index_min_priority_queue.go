@@ -29,10 +29,7 @@ func (pq *IndexMinPriorityQueue) Empty() bool {
 
 func (pq *IndexMinPriorityQueue) Contains(i int) bool {
 	pq.validateIndex(i)
-	if pq.qp[i] == -1 {
-		return false
-	}
-	return true
+	return pq.qp[i] != -1
 }
 
 func (pq *IndexMinPriorityQueue) Size() int {
