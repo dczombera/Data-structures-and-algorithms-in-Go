@@ -4,38 +4,20 @@ import (
 	"fmt"
 )
 
-type Bag struct {
-	items []int
-	Size  int
-}
-
 type Graph struct {
 	vertices  int
 	edges     int
-	adjacency []Bag
-}
-
-func (b *Bag) add(v int) {
-	b.items = append(b.items, v)
-	b.Size++
+	adjacency [][]int
 }
 
 func NewGraph(sizeV int) Graph {
-	return Graph{sizeV, 0, make([]Bag, sizeV)}
+	return Graph{sizeV, 0, make([][]int, sizeV)}
 }
 
 func (g *Graph) AddEdge(v, w int) {
 	g.validateVertices(v, w)
-	g.adjacency[v].add(w)
-	g.adjacency[w].add(v)
-}
-
-func (g *Graph) validateVertices(vertices ...int) {
-	for _, v := range vertices {
-		if v < 0 || v >= g.vertices {
-			panic(fmt.Sprintf("vertix %v out of graph bounds", v))
-		}
-	}
+	g.adjacency[v] = append(g.adjacency[v], w)
+	g.adjacency[w] = append(g.adjacency[w], v)
 }
 
 func (g *Graph) Vertices() int {
@@ -48,10 +30,18 @@ func (g *Graph) Edges() int {
 
 func (g *Graph) AdjacencyList(vertex int) []int {
 	g.validateVertices(vertex)
-	return g.adjacency[vertex].items
+	return g.adjacency[vertex]
 }
 
 func (g *Graph) Degree(vertex int) int {
 	g.validateVertices(vertex)
-	return g.adjacency[vertex].Size
+	return len(g.adjacency[vertex])
+}
+
+func (g *Graph) validateVertices(vertices ...int) {
+	for _, v := range vertices {
+		if v < 0 || v >= g.vertices {
+			panic(fmt.Sprintf("vertix %v out of graph bounds", v))
+		}
+	}
 }
