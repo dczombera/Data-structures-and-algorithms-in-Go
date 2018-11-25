@@ -43,13 +43,13 @@ func NewSymbolGraph(filename string, delimiter string) *SymbolGraph {
 	}
 
 	g := graph.NewGraph(len(sg.keys))
-	// Rewind reader in order to avoid creation of new scanner
+	// Rewind reader in order to avoid creation of new file
 	_, err = f.Seek(0, 0)
 	if err != nil {
 		panic(err)
 	}
-	scanner = bufio.NewScanner(f)
 
+	scanner = bufio.NewScanner(f)
 	// connect first vertex on each line with all other on same line
 	for scanner.Scan() {
 		tokens := strings.Split(scanner.Text(), delimiter)
