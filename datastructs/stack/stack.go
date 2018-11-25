@@ -26,21 +26,19 @@ func (s *Stack) Push(i int) {
 }
 
 func (s *Stack) Pop() (int, error) {
-	var n *node.Node
 	if s.IsEmpty() {
-		return n.Item, errors.New("Stack is empty!")
+		return -1, errors.New("Stack is empty")
 	}
 
-	n = s.First
-	s.First = n.Next
+	n := s.First
+	s.First = s.First.Next
 	s.Size--
 	return n.Item, nil
 }
 
 func (s *Stack) Peek() (int, error) {
-	var n *node.Node
 	if s.IsEmpty() {
-		return n.Item, errors.New("Stack is empty!")
+		return -1, errors.New("Stack is empty")
 	}
 	return s.First.Item, nil
 }
