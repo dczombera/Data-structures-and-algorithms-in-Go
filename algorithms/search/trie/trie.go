@@ -103,3 +103,23 @@ func (this Trie) collectPattern(n *Node, pre, pattern string, q *[]string) {
 		}
 	}
 }
+
+func (this Trie) LongestPrefixOf(s string) string {
+	length := this.search(this.root, s, 0, 0)
+	return s[0:length]
+}
+
+func (this Trie) search(n *Node, s string, pos, length int) int {
+	if n == nil {
+		return length
+	}
+	if n.value != nil {
+		length = pos
+	}
+	if pos == len(s) {
+		return length
+	}
+	char := n.next[s[pos]]
+	return this.search(char, s, pos+1, length)
+
+}
