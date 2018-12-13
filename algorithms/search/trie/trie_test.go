@@ -130,3 +130,37 @@ func TestKeysThatMatch(t *testing.T) {
 		}
 	}
 }
+
+func TestLongestPrefixOf(t *testing.T) {
+	type Key struct {
+		s   string
+		key string
+	}
+	testCases := []struct {
+		data []KV
+		want []Key
+	}{
+		{
+			data: []KV{{"she", 1}, {"sea", 1}, {"see", 1}, {"shell", 1}, {"shell", 1}, {"shellsort", 1}, {"hello", 1}, {"he", 1}},
+			want: []Key{{"she", "she"}, {"shel", "she"}, {"shell", "shell"}, {"hell", "he"}, {"sh", ""}, {"he", "he"}},
+		},
+		{
+			data: []KV{{"Han", 1}, {"shot", 1}, {"first", 1}, {",", 1}, {"he", 1}, {"said", 1}, {".", 1}},
+			want: []Key{{".", "."}, {"Hanoi", "Han"}, {"said", "said"}},
+		},
+	}
+
+	for _, tc := range testCases {
+		trie := Constructor()
+		for _, d := range tc.data {
+			trie.Put(d.key, d.val)
+		}
+
+		for _, w := range tc.want {
+			key := trie.LongestPrefixOf(w.s)
+			if key != w.key {
+				t.Errorf("Got longest key %v that is prefix of %v, want %v", key, w.s, w.key)
+			}
+		}
+	}
+}
