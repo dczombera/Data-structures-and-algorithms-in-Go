@@ -15,23 +15,26 @@ type Node struct {
 
 type Value int
 
+var initCap = 8
+
 func Constructor() Trie {
 	return Trie{}
 }
 
 func (this Trie) Get(key string) (int, error) {
-	return this.get(this.root, key, 0)
+	n := this.get(this.root, key, 0)
+	if n == nil || n.value == nil {
+		return -1, errors.New("Key not found")
+	}
+	return int(*n.value), nil
 }
 
-func (this Trie) get(n *Node, key string, pos int) (int, error) {
+func (this Trie) get(n *Node, key string, pos int) *Node {
 	if n == nil {
-		return -1, errors.New("Key does not exist")
+		return nil
 	}
 	if len(key) == pos {
-		if n.value == nil {
-			return -1, errors.New("Key does not exist")
-		}
-		return int(*n.value), nil
+		return n
 	}
 	return this.get(n.next[key[pos]], key, pos+1)
 }
@@ -52,4 +55,51 @@ func (this *Trie) put(node *Node, key string, value int, pos int) *Node {
 		node.next[key[pos]] = this.put(node.next[key[pos]], key, value, pos+1)
 	}
 	return node
+}
+
+func (this Trie) Keys() []string {
+	return this.KeysWithPrefix("")
+}
+
+func (this Trie) KeysWithPrefix(pre string) []string {
+	q := make([]string, 0, initCap)
+	this.collect(this.get(this.root, pre, 0), pre, &q)
+	return q
+}
+
+func (this Trie) collect(n *Node, pre string, q *[]string) {
+	if n == nil {
+		return
+	}
+	if n.value != nil {
+		*q = append(*q, pre)
+	}
+	for i, c := range n.next {
+		this.collect(c, pre+string(i), q)
+	}
+}
+
+func (this Trie) KeysThatMatch(pattern string) []string {
+	q := make([]string, 0, initCap)
+	this.collectPattern(this.root, "", pattern, &q)
+	return q
+}
+
+func (this Trie) collectPattern(n *Node, pre, pattern string, q *[]string) {
+	if n == nil {
+		return
+	}
+	if len(pattern) == len(pre) && n.value != nil {
+		*q = append(*q, pre)
+	}
+	if len(pattern) == len(pre) {
+		return
+	}
+
+	char := pattern[len(pre)]
+	for i, c := range n.next {
+		if char == '.' || byte(i) == char {
+			this.collectPattern(c, pre+string(i), pattern, q)
+		}
+	}
 }
