@@ -164,3 +164,36 @@ func TestLongestPrefixOf(t *testing.T) {
 		}
 	}
 }
+
+func TestDelete(t *testing.T) {
+	testCases := []struct {
+		data       []KV
+		wantDelete []string
+		wantGet    []KV
+	}{
+		{
+			data:       []KV{{"she", 1}, {"sea", 1}, {"see", 1}, {"shell", 1}, {"shell", 1}, {"shellsort", 1}, {"hello", 1}, {"he", 1}},
+			wantDelete: []string{"she", "shell", "he"},
+			wantGet:    []KV{{"shellsort", 1}, {"hello", 1}},
+		},
+	}
+
+	for _, tc := range testCases {
+		trie := Constructor()
+		for _, d := range tc.data {
+			trie.Put(d.key, d.val)
+		}
+		for _, s := range tc.wantDelete {
+			trie.Delete(s)
+		}
+		for _, d := range tc.wantGet {
+			v, err := trie.Get(d.key)
+			if err != nil {
+				t.Errorf("Got error %v, want value %v for key %v", err, d.val, d.key)
+			}
+			if v != d.val {
+				t.Errorf("Got value %v for key %v, want value %v", v, d.key, d.val)
+			}
+		}
+	}
+}
