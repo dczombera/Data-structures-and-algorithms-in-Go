@@ -123,3 +123,31 @@ func (this Trie) search(n *Node, s string, pos, length int) int {
 	return this.search(char, s, pos+1, length)
 
 }
+
+func (this *Trie) Delete(s string) {
+	this.root = this.delete(this.root, s, 0)
+}
+
+func (this *Trie) delete(x *Node, s string, pos int) *Node {
+	if x == nil {
+		return nil
+	}
+
+	if len(s) == pos && x.value != nil {
+		x.value = nil
+	} else {
+		x.next[s[pos]] = this.delete(x.next[s[pos]], s, pos+1)
+	}
+
+	if x.value != nil {
+		return x
+	}
+
+	for i := range x.next {
+		if x.next[i] != nil {
+			return x
+		}
+	}
+
+	return nil
+}
