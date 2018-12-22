@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	substring_search "github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/substring_search/Knuth_Morris_Pratt"
+	substring_search "github.com/dczombera/data-structures-and-algorithms-in-go/algorithms/search/substring_search"
 )
 
 var text string
